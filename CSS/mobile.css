@@ -1,0 +1,36 @@
+
+.intro-header{
+  margin-bottom: 0;
+}
+
+.site-heading{
+  text-align: center;
+  padding: 50px;
+  }
+
+h1{
+  font-size: 50px;
+}
+
+.navbar-right{
+  float: right;
+  margin-right: 5px;
+}
+
+.navbar-nav>li{
+  float: left;
+}
+
+.nav>li>a{
+  padding: 10px;
+}
+
+.post-preview>a>.post-title{
+  font-size: 18px;
+}
+
+.post-content-preview {
+    font-size: 13px;
+    font-style: italic;
+    color: #a3a3a3;
+}
