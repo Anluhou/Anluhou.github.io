@@ -1,0 +1,15 @@
+html,body
+{
+overflow:hidden;
+overflow-y:auto;
+}
+
+
+
+.wjblogs_code{
+  word-break: break-word;
+}
+
+.container{
+  margin-top: 20px;
+}
