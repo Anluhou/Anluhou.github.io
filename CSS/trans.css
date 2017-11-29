@@ -13,3 +13,8 @@ overflow-y:auto;
 .container{
   margin-top: 20px;
 }
+
+p{
+  line-height: 2.4;
+  font-size: 14px;
+}
