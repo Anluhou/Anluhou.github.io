@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="IMG\wj_favicon.ico" type="image/x-icon" />
+  <link href="CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/wj-blog.css">
+  <link rel="stylesheet" href="CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="CSS/mobile.css">
+  <script src="js/trans.js" charset="utf-8"></script>
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a href="index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+          <h2>Javascript面向对象编程（三）：非构造函数的继承</h2>
+          <h4>一、什么是"非构造函数"的继承？</h4>
+          <p>比如，现在有一个对象，叫做"中国人"。</p>
+          <pre>
+            var Chinese = {
+        　　　　nation:'中国'
+        　　};
+          </pre>
+          <p>
+            还有一个对象，叫做"医生"。
+          </p>
+          <pre>
+            var Doctor ={
+        　　　　career:'医生'
+        　　}
+          </pre>
+          <p>
+            请问怎样才能让"医生"去继承"中国人"，也就是说，我怎样才能生成一个"中国医生"的对象？
+            这里要注意，这两个对象都是普通对象，不是构造函数，无法使用构造函数方法实现"继承"。
+          </p>
+          <h4>二、object()方法</h4>
+          <p>json格式的发明人Douglas Crockford，提出了一个object()函数，可以做到这一点。</p>
+          <pre>
+            function object(o) {
+        　　　　function F() {}
+        　　　　F.prototype = o;
+        　　　　return new F();
+        　　}
+          </pre>
+          <p>这个object()函数，其实只做一件事，就是把子对象的prototype属性，指向父对象，从而使得子对象与父对象连在一起。
+            使用的时候，第一步先在父对象的基础上，生成子对象：</p>
+          <pre>var Doctor = object(Chinese);</pre>
+          <p>然后，再加上子对象本身的属性：</p>
+          <pre>Doctor.career = '医生';</pre>
+          <p>这时，子对象已经继承了父对象的属性了</p>
+          <pre>alert(Doctor.nation); //中国</pre>
+          <h4>三、浅拷贝</h4>
+          <p>除了使用"prototype链"以外，还有另一种思路：把父对象的属性，全部拷贝给子对象，也能实现继承。
+            下面这个函数，就是在做拷贝：</p>
+          <pre>
+            function extendCopy(p) {
+        　　　　var c = {};
+        　　　　for (var i in p) {
+        　　　　　　c[i] = p[i];
+        　　　　}
+        　　　　c.uber = p;
+        　　　　return c;
+        　　}
+          </pre>
+          <p>使用的时候，这样写：</p>
+          <pre>
+            var Doctor = extendCopy(Chinese);
+          　Doctor.career = '医生';
+          　alert(Doctor.nation); // 中国
+        </pre>
+        <p>但是，这样的拷贝有一个问题。那就是，如果父对象的属性等于数组或另一个对象，那么实际上，子对象获得的只是一个内存地址，而不是真正拷贝，因此存在父对象被篡改的可能。</p>
+        <p>请看，现在给Chinese添加一个"出生地"属性，它的值是一个数组。</p>
+        <pre>Chinese.birthPlaces = ['北京','上海','香港'];</pre>
+        <p>通过extendCopy()函数，Doctor继承了Chinese。</p>
+        <pre>var Doctor = extendCopy(Chinese);</pre>
+        <p>然后，我们为Doctor的"出生地"添加一个城市：</p>
+        <pre>Doctor.birthPlaces.push('厦门');</pre>
+        <p>发生了什么事？Chinese的"出生地"也被改掉了！</p>
+        <pre>
+          alert(Doctor.birthPlaces); //北京, 上海, 香港, 厦门
+　　      alert(Chinese.birthPlaces); //北京, 上海, 香港, 厦门
+        </pre>
+        <p>所以，extendCopy()只是拷贝基本类型的数据，我们把这种拷贝叫做"浅拷贝"。这是早期jQuery实现继承的方式。</p>
+        <h4>四、深拷贝</h4>
+        <p>所谓"深拷贝"，就是能够实现真正意义上的数组和对象的拷贝。它的实现并不难，只要递归调用"浅拷贝"就行了。</p>
+        <pre>
+          function deepCopy(p, c) {
+      　　　　var c = c || {};
+      　　　　for (var i in p) {
+      　　　　　　if (typeof p[i] === 'object') {
+      　　　　　　　　c[i] = (p[i].constructor === Array) ? [] : {};
+      　　　　　　　　deepCopy(p[i], c[i]);
+      　　　　　　} else {
+      　　　　　　　　　c[i] = p[i];
+      　　　　　　}
+      　　　　}
+      　　　　return c;
+      　　}
+        </pre>
+        <p>使用的时候这样写：</p>
+        <pre>var Doctor = deepCopy(Chinese);</pre>
+        <p>现在，给父对象加一个属性，值为数组。然后，在子对象上修改这个属性：</p>
+        <pre>
+          Chinese.birthPlaces = ['北京','上海','香港'];
+　         Doctor.birthPlaces.push('厦门');
+        </pre>
+        <p>这时，父对象就不会受到影响了。</p>
+        <pre>
+          alert(Doctor.birthPlaces); //北京, 上海, 香港, 厦门
+　　      alert(Chinese.birthPlaces); //北京, 上海, 香港
+        </pre>
+        <p>目前，jQuery库使用的就是这种继承方法。</p>
+        <a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html">转载自阮一峰的博客</a>
+        </div>
+      </div>
+    </div>
+  </article>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>
