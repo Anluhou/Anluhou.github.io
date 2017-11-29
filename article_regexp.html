@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link href="CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/wj-blog.css">
+  <link rel="stylesheet" href="CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="CSS/mobile.css">
+  <script src="js/trans.js" charset="utf-8"></script>
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a href="index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+          <h2>
+            JS正则表达式
+          </h2>
+          <h4>
+            1.正则表达式的功能
+          </h4>
+            <p>
+              1.测试字符串的某个模式。例如说我们看到13587654321就能知道这是一个手机号，看到
+              anluhou@xxx.com就知道这是一个邮箱。<br>
+              2.替换文本。可以在文档中使用一个正则表达式来标识特定文字，然后可以全部将其删除，或者替换为别的文字<br>
+              3.根据模式匹配从字符串中提取一个子字符串。可以用来在文本或输入字段中查找特定文字<br>
+            </p>
+          <h4>
+            2.元字符介绍
+          </h4>
+            <p>
+              "^" ：^会匹配行或者字符串的起始位置，有时还会匹配整个文档的起始位置。（开始）<br>
+              "$" ：$会匹配行或字符串的结尾。(结尾) <br>
+              "\b" :不会消耗任何字符只匹配一个位置，常用于匹配单词边界 如 我想从字符串中"This is Regex"匹配单独的单词 "is" 正则就要写成 "\bis\b" <br>
+              "\d": 匹配数字，例如要匹配一个固定格式的电话号码以0开头前4位后7位，如0571-12345678  正则:^0\d\d\d-\d\d\d\d\d\d\d$ 这里只是为了介绍"\d"字符,还有更简便的方法. <br>
+              "\w"：匹配字母，数字，下划线.例如我要匹配"a12345BCDE__wjj" 正则："\w+"  这里的"+"字符为一个量词指重复的次数. <br>
+              "\s"：匹配空格，例如字符 "a b c" 正则："\w\s\w\s\w"  一个字符后跟一个空格，如有字符间有多个空格直接把"\s" 写成 "\s+" 让空格重复. <br>
+              "."： 匹配除了换行符以外的任何字符
+                    这个算是"\w"的加强版了"\w"不能匹配 空格 如果把字符串加上空格用"\w"就受限了，看下用 "."是如何匹配字符"a23 4 5 B C D__TTz"  正则：".+"
+              "[abc]": 字符组匹配包含括号内元素的字符,这个比较简单了只匹配括号内存在的字符，还可以写成[a-z]匹配a至z的所以字母就等于可以用来控制只能输入英文了
+            </p>
+          <h4>
+            3.几种反义
+          </h4>
+           <p>
+             写法很简单改成大写就行了，意思与原来的相反 <br>
+
+             "\W"   匹配任意不是字母，数字，下划线 的字符<br>
+
+             "\S"   匹配任意不是空白符的字符<br>
+
+          "\D"  匹配任意非数字的字符<br>
+
+             "\B"  匹配不是单词开头或结束的位置<br>
+
+             "[^abc]"  匹配除了abc以外的任意字符<br>
+           </p>
+          <h4>4.量词</h4>
+          <p>
+            先解释关于量词所涉及到的重要的三个概念 <br>
+
+            贪婪(贪心) 如"*"字符 贪婪量词会首先匹配整个字符串，尝试匹配时，它会选定尽可能多的内容，如果 失败则回退一个字符，然后再次尝试回退的过程就叫做回溯，它会每次回退一个字符，直到找到匹配的内容或者没有字符可以回退。相比下面两种贪婪量词对资源的消耗是最大的，<br>
+
+           懒惰(勉强) 如 "?"  懒惰量词使用另一种方式匹配，它从目标的起始位置开始尝试匹配，每次检查一个字符，并寻找它要匹配的内容，如此循环直到字符结尾处。 <br>
+
+           占有  如"+" 占有量词会覆盖事个目标字符串，然后尝试寻找匹配内容 ，但它只尝试一次，不会回溯，就好比先抓一把石头，然后从石头中挑出黄金<br>
+
+           <strong>"*"(贪婪)</strong>   重复零次或更多<br>
+
+　　　      例如"aaaaaaaa" 匹配字符串中所有的a  正则： "a*"   会出到所有的字符"a"<br>
+
+           <strong>"+"(懒惰) </strong>   重复一次或更多次<br>
+
+　　        例如"aaaaaaaa" 匹配字符串中所有的a  正则： "a+"  会取到字符中所有的a字符，  "a+"与"a*"不同在于"+"至少是一次而"*" 可以是0次，<br>
+
+　　        稍后会与"?"字符结合来体现这种区别<br>
+
+            <strong>"?"(占有) </strong>   重复零次或一次<br>
+
+  　　       例如"aaaaaaaa" 匹配字符串中的a 正则 ： "a?" 只会匹配一次，也就是结果只是单个字符a<br>
+
+  　     <strong>"{n}"  </strong>  重复n次<br>
+
+  　　       例如从"aaaaaaaa" 匹配字符串的a 并重复3次 正则：  "a{3}"  结果就是取到3个a字符  "aaa";<br>
+
+  　      <strong>"{n,m}" </strong>    重复n到m次<br>
+
+  　　       例如正则 "a{3,4}" 将a重复匹配3次或者4次 所以供匹配的字符可以是三个"aaa"也可以是四个"aaaa" 正则都可以匹配到<br>
+
+            <strong>"{n,}" </strong>     重复n次或更多次<br>
+
+     　　    与{n,m}不同之处就在于匹配的次数将没有上限，但至少要重复n次 如 正则"a{3,}" a至少要重复3次<br>
+
+             把量词了解了之后之前匹配电话号码的正则现在就可以改得简单点了^0\d\d\d-\d\d\d\d\d\d\d$ 可以改为"^0\d+-\d{7}$"。<br>
+
+            这样写还不够完美如果因为前面的区号没有做限定，以至于可以输入很多们，而通常只能是3位或者4位，<br>
+
+            现在再改一下 "^0\d{2,3}-\d{7}"如此一来区号部分就可以匹配3位或者4位的了<br>
+          </p>
+          <h4>5.懒惰限定符</h4>
+          <p>
+          <strong>"*?"  </strong>      重复任意次，但尽可能少重复 <br>
+
+　　      如 "acbacb"  正则  "a.*?b" 只会取到第一个"acb" 原本可以全部取到但加了限定符后，只会匹配尽可能少的字符 ，而"acbacb"最少字符的结果就是"acb"<br>
+
+ <strong>"+?"  </strong>   重复1次或更多次，但尽可能少重复<br>
+
+　　     与上面一样，只是至少要重复1次<br>
+
+<strong>"??"  </strong>  重复0次或1次，但尽可能少重复<br>
+
+    　　  如 "aaacb" 正则 "a.??b" 只会取到最后的三个字符"acb"<br>
+
+<strong>"{n,m}?" </strong>  重复n到m次，但尽可能少重复<br>
+
+          如 "aaaaaaaa"  正则 "a{0,m}" 因为最少是0次所以取到结果为空<br>
+
+<strong>"{n,}?"  </strong>    重复n次以上，但尽可能少重复<br>
+
+          如 "aaaaaaa"  正则 "a{1,}" 最少是1次所以取到结果为 "a" <br>
+          </p>
+        </div>
+
+
+      </div>
+    </div>
+  </article>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>
