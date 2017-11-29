@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link href="CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/wj-blog.css">
+  <link rel="stylesheet" href="CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="CSS/mobile.css">
+  <script src="js/trans.js" charset="utf-8"></script>
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a href="index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+          <h2>
+            如何利用GitHub Pages 搭建自己的博客
+          </h2>
+          <h4>
+            1.创建一个存储库
+          </h4>
+          <p>
+            转<a href="https://github.com/">GitHub</a>并创建一个名为username .github.io 的<a href="https://github.com/new">新存储库</a>，其中username是GitHub上的用户名（或组织名称）。
+          </p>
+          <p>如果存储库的第一部分不完全符合您的用户名，则不起作用，因此请确保正确无误。</p>
+          <img src="IMG/github-repo.png" >
+          <h4>
+            2. <a href="https://git-scm.com/downloads">下载git</a>
+          </h4>
+          <p>
+            <a href="http://blog.csdn.net/llf369477769/article/details/51917557">如何通过git上传自己的项目</a>
+          </p>
+          <h4>
+            3.克隆存储库
+          </h4>
+          <p>
+            转到要存储项目的文件夹，然后克隆新的存储库：
+          </p>
+          <img src="IMG/gitclone.png" alt="">
+          <p>输入项目文件夹并添加一个index.html文件.<strong>博客首页必须用index.html来显示</strong></p>
+          <img src="IMG/gitindex.png" alt="">
+          <h4>
+            4.上传
+          </h4>
+          <p>添加，提交和推送您的更改：</p>
+          <img src="IMG/gitpush.png" alt="">
+          <h4>5.通过其他方式上传代码修改博客</h4>
+          <p>进入自己的username.github.io仓库 可以直接修改代码</p>
+          <img src="IMG/github_io.png" alt="">
+          <img src="IMG/githubio.png" alt="">
+          <h4>
+            6.为您的GitHub Pages网站添加或删除自定义域
+          </h4>
+          <p>在GitHub上，导航到你的GitHub Pages站点的仓库。</p>
+          <p>在您的存储库名称下，单击 Settings</p>
+          <img src="IMG/git1.png" alt="">
+          <p>在“自定义域名”下，添加或删除自定义域名，然后点击保存。</p>
+          <img src="IMG/git2.png" alt="">
+          <h4>
+            7.将你的域名解析到GitHub Pages博客上
+          </h4>
+          <p>添加CNAME文件:在仓库根目录下添加一个CNAM文件，没有后缀名，里面内容为你的域名(如:test.com),不需要添加http/www等前缀。</p>
+          <img src="IMG/git3.png" alt="">
+          <p><a href="https://www.cnblogs.com/olddoublemoon/p/6629398.html">获取github pages的ip地址以及域名解析</a></p>
+          <h4>
+            8. <a href="http://anluhou.top">然后简单的博客就制作完成了</a>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </article>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>
