@@ -56,17 +56,17 @@
           <pre>
             function test(){
       　　　　this.x = 1;
-      　　　　alert(this.x);
+      　　　　alert(this.x);//
         　　}
         　　test(); // 1
           </pre>
           <p>为了证明this就是全局对象，我对代码做一些改变：</p>
           <pre>
-            var x = 1;
-          　　function test(){
-          　　　　alert(this.x);
-          　　}
-          　　test(); // 1
+            var x = 1;//this指向全局变量x
+          　function test(){
+          　　　alert(this.x);
+          　}
+          　test(); // 1
           </pre>
           <p>运行结果还是1。再变一下：</p>
           <pre>
@@ -117,7 +117,7 @@
         　　o.m.apply(); //0
           </pre>
           <p>
-            apply()的参数为空时，默认调用全局对象。因此，这时的运行结果为0，证明this指的是全局对象。
+            <strong>apply()的参数为空时，默认调用全局对象。</strong>因此，这时的运行结果为0，证明this指的是全局对象。
             如果把最后一行代码修改为
           </p>
           <pre>　o.m.apply(o); //1</pre>
