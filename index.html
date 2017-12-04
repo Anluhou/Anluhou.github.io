@@ -13,7 +13,7 @@
   <title>吴杰的博客</title>
 </head>
 <body>
-  <nav class="navbar">
+  <nav class="navbar" name="top">
     <div class="navbar-brand">
       <a href="index.html">Wj Blog</a>
     </div>
@@ -35,6 +35,24 @@
                 col-sm-12
                 col-xs-12
                 postlist-container ">
+        <div class="post-preview">
+          <a href="article_call.html">
+            <h2 class="post-title">
+              深入理解call和apply()
+            </h2>
+            <h3 class="post-subtitle">
+
+            </h3>
+            <span class="post-content-preview">
+              call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，
+              换句话说，就是为了改变函数体内部 this 的指向。
+              因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。
+            </span>
+          </a>
+          <p class="post-meta">
+            Posted by Wj on Dec 4, 2017
+          </p>
+        </div>
         <div class="post-preview">
           <a href="article_this.html">
             <h2 class="post-title">
@@ -153,55 +171,7 @@
           </p>
         </div>
         <hr>
-        <div class="post-preview">
-          <a href="article_dom1.html">
-            <h2 class="post-title">
-              Javascript 面向对象编程（一）：封装
-            </h2>
-
-            <span class="post-content-preview">
-              学习Javascript，最难的地方是什么？
-              我觉得，Object（对象）最难。因为Javascript的Object模型很独特，和其他语言都不一样，不容易掌握。
-            </span>
-          </a>
-          <p class="post-meta">
-            Posted by Wj on Nov 8, 2017
-          </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-          <a href="article_dom2">
-            <h2 class="post-title">
-              Javascript面向对象编程（二）：构造函数的继承
-            </h2>
-
-            <span class="post-content-preview">
-              这个系列的第一部分，主要介绍了如何"封装"数据和方法，以及如何从原型对象生成实例。
-              今天要介绍的是，对象之间的"继承"的五种方法。
-              比如，现在有一个"动物"对象的构造函数。
-            </span>
-          </a>
-          <p class="post-meta">
-            Posted by Wj on Nov 8, 2017
-          </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-          <a href="article_dom3">
-            <h2 class="post-title">
-              Javascript面向对象编程（三）：非构造函数的继承
-            </h2>
-
-            <span class="post-content-preview">
-              这个系列的第一部分介绍了"封装"，第二部分介绍了使用构造函数实现"继承"。
-              今天是最后一个部分，介绍不使用构造函数实现"继承"。
-            </span>
-          </a>
-          <p class="post-meta">
-            Posted by Wj on Nov 8, 2017
-          </p>
-        </div>
-        <hr>
+        <div id="nextr"><a href="index2.html">Next page &gt;</a></div>
       </div>
       <div class="
                 col-lg-3 col-lg-offset-0
@@ -232,13 +202,19 @@
               <br>
               Let we go
             </p>
-
-
-          </div>
+        </div>
         </section>
       </div>
     </div>
   </div>
+  
+  <a href="#top">
+    <div class="to-top">
+      <div class="arrow"></div>
+      <div class="stick"></div>
+    </div>
+  </a>
+
   <footer>
     <p class="copyright">
       Copyright © Wj Blog 2017
