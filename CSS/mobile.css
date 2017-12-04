@@ -5,7 +5,7 @@
 
 .site-heading{
   text-align: center;
-  padding: 25px;
+  padding: 20px;
   }
 
 h1{
@@ -33,4 +33,22 @@ h1{
     font-size: 13px;
     font-style: italic;
     color: #a3a3a3;
+}
+
+#nextr{
+  float: right;
+  padding: 0 10px;
+  border: 1px solid #eee;
+  color: #404040;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+#nextl{
+  float: left;
+  padding: 0 10px;
+  border: 1px solid #eee;
+  color: #404040;
+  font-weight: 700;
+  font-size: 16px;
 }
