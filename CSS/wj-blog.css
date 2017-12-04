@@ -8,7 +8,10 @@ body {
 
 h2{
   font-weight: 700;
+
 }
+
+
 
 a:hover{
   text-decoration: none;
@@ -53,7 +56,7 @@ h1{
 }
 
 .navbar-brand{
-  padding: 20px;
+  padding: 30px;
 }
 
 .navbar a:hover{
@@ -108,7 +111,8 @@ h1{
     margin-bottom: 20px;
 }
 
-.post-content-preview{
+.post-content-preview,
+.post-content-preview>p{
   font-size: 14px;
   font-style: italic;
   color: #a3a3a3;
@@ -146,4 +150,59 @@ footer .copyright{
   text-align: center;
   font-size: 14px;
   color: #777;
+}
+
+#nextr{
+  float: right;
+  padding: 0 20px;
+  border: 1px solid #eee;
+  color: #404040;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+#nextl{
+  float: left;
+  padding: 0 20px;
+  border: 1px solid #eee;
+  color: #404040;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.to-top{
+  display: block;
+  opacity: .9;
+  z-index: 99999;
+  position: fixed;
+  bottom: 100px;
+  right: 5%;
+  margin-left: 40px;
+  padding: 20px;
+  width: 38px;
+  height: 38px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid #404040;
+}
+
+.arrow {
+    position: absolute;
+    left: 10px;
+    top: -1px;
+    width: 0;
+    height: 0;
+    border: 9px solid transparent; /*9px 的边框 透明 */
+    border-bottom-color: #404040;/*底部显示颜色 看上去就是个三角形*/
+}
+
+.stick {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    width: 9px;
+    height: 14px;
+    display: block;
+    border-radius: 1px;
+    background-color: #404040;
 }
