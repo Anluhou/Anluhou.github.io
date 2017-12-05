@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="IMG\wj_favicon.ico" type="image/x-icon" />
+  <link href="../CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/wj-blog.css">
+  <link rel="stylesheet" href="../CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="../CSS/mobile.css">
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar" name="top">
+    <div class="navbar-brand">
+      <a href="../index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1 post-container">
+          <div class="wjblogs_code">
+            <pre>
+<span style="color: #008080;">1</span>   &lt;html lang="en"&gt;
+<span style="color: #008080;">2</span>   &lt;head&gt;
+<span style="color: #008080;">3</span>   &lt;meta charset="UTF-8"&gt;
+<span style="color: #008080;">4</span>   &lt;title&gt;Translate&lt;/title&gt;
+<span style="color: #008080;">5</span>   &lt;link rel="stylesheet" href="trans.css"&gt;
+<span style="color: #008080;">6</span>   &lt;/head&gt;
+<span style="color: #008080;">7</span>
+<span style="color: #008080;">8</span>   &lt;body&gt;
+<span style="color: #008080;">9</span>
+<span style="color: #008080;">10</span>   &lt;div class="btn"&gt;
+<span style="color: #008080;">11</span>   &lt;button id="selectBtn" name="Click"&gt;Translate&lt;/button&gt;
+<span style="color: #008080;">12</span>   &lt;/div&gt;
+<span style="color: #008080;">13</span>
+<span style="color: #008080;">14</span>   &lt;textarea id="transInput" placeholder="输入文字即可翻译" dir=ltr&gt;&lt;/textarea&gt;
+<span style="color: #008080;">15</span>   &lt;textarea id="transDisplay"&gt;&lt;/textarea&gt;
+<span style="color: #008080;">16</span>
+<span style="color: #008080;">17</span>   &lt;script src="jquery.js" type="text/javascript"&gt;&lt;/script&gt;
+<span style="color: #008080;">18</span>   &lt;script src="md5.js" charset="utf-8"&gt;&lt;/script&gt;
+<span style="color: #008080;">19</span>   &lt;script src="trans.js" charset="utf-8"&gt;&lt;/script&gt;
+<span style="color: #008080;">20</span>
+<span style="color: #008080;">21</span>   &lt;/body&gt;
+<span style="color: #008080;">22</span>
+<span style="color: #008080;">23</span>   &lt;/html&gt;
+            </pre>
+
+            <pre>
+<span style="color: #008080;">1</span>   textarea{
+<span style="color: #008080;">2</span>       float:left;
+<span style="color: #008080;">3</span>       min-width: 500px;
+<span style="color: #008080;">4</span>       min-height: 220px;
+<span style="color: #008080;">5</span>       font-size: 20px;
+<span style="color: #008080;">6</span>       font-weight: 500;
+<span style="color: #008080;">8</span>       }
+<span style="color: #008080;">9</span>
+<span style="color: #008080;">10</span>   #selectBtn{
+<span style="color: #008080;">11</span>   display: block;
+<span style="color: #008080;">12</span>   width: 106px;
+<span style="color: #008080;">13</span>   height: 32px;
+<span style="color: #008080;">14</span>     background-color: #4395ff;
+<span style="color: #008080;">15</span>     color: #fff;
+<span style="color: #008080;">16</span>     font-weight: 700;
+<span style="color: #008080;">17</span>     font-size: 16px;
+<span style="color: #008080;">18</span>     border: 0;
+<span style="color: #008080;">19</span>     margin-bottom: 20px;
+<span style="color: #008080;">20</span>   }
+<span style="color: #008080;">21</span>
+<span style="color: #008080;">22</span>   #transInput{
+<span style="color: #008080;">23</span>   border: 1px solid #dedede;
+<span style="color: #008080;">24</span>   }
+<span style="color: #008080;">25</span>
+<span style="color: #008080;">26</span>   #transDisplay{
+<span style="color: #008080;">27</span>   background-color: #f0f0f0;
+<span style="color: #008080;">28</span>   }
+            </pre>
+            <pre>
+//在线翻译查询(百度翻译)
+$('#selectBtn').click(function() {
+    var appid = '';//填你自己的百度翻译APP ID
+    var key = '';//填你自己的百度翻译密钥
+    var salt = (new Date).getTime();//取当前时间作为随机数
+    var query= $('#transInput').val();//取输入框的val
+    var q = encodeURIComponent(query);//编码UTF-8
+    var str1 = appid + query + salt +key;//秘钥
+    var sign = MD5(str1);//md5加密
+    $.ajax({
+        url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+        type: 'get',
+        dataType: 'jsonp',
+        data: {
+            q: query,
+            appid: appid,
+            salt: salt,
+            from: 'auto',
+            to: 'auto',
+            sign: sign
+        },
+        success: function (data) {
+console.log(data);
+var result = data.trans_result;
+$('#transDisplay').empty();
+for(var i in result){
+    var html = decodeURIComponent(result[i].dst);
+    $('#transDisplay').append(html);
+}
+          },
+          error: function(){
+            alert('error');
+          }
+      });
+  });
+            </pre>
+
+          </div>
+        <div>
+          1.首先到<a href="http://api.fanyi.baidu.com/api/trans/product/index">百度翻译开放平台</a>获取APPID和key. <br>
+          2.文件里还要包含md5.js,jquery.js. <br>
+          <a href="https://github.com/Anluhou/Baidu-translate-API-demo">demo地址</a> <br>
+        </div>
+      </div>
+    </div>
+  <a href="#top">
+  <div class="to-top">
+    <div class="arrow"></div>
+    <div class="stick"></div>
+  </div>
+</a>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>
