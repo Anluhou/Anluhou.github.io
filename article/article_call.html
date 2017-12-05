@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="IMG\wj_favicon.ico" type="image/x-icon" />
+  <link href="../CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/wj-blog.css">
+  <link rel="stylesheet" href="../CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="../CSS/mobile.css">
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar" name="top">
+    <div class="navbar-brand">
+      <a href="index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+          <h2>如何理解call和apply</h2>
+          <h3>1.定义</h3>
+          <p>call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了改变函数体内部 this 的指向。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p>
+          <h3>2.作用</h3>
+          <p>二者的作用完全一样，只是接受参数的方式不太一样。例如，有一个函数 foo 定义如下</p>
+          <pre>var foo = function(arg1,arg2){};</pre>
+          <p>就可以通过foo.call(this,arg1,arg2);或者foo.apply(this,[arg1,arg2]);来调用。其中this是你想指定的上下文，他可以把任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。</p>
+          <p>在javascript OOP中，我们经常会这样定义：</p>
+          <pre>
+            function cat(){};
+
+            cat.prototype={
+              food:"fish",
+              say: function(){
+              alert("I love "+this.food);
+            }}
+
+            var blackCat = new cat;
+            blackCat.say();
+
+            //this指向whiteDog
+            whiteDog={food:"bone"};
+            blackCat.say.call(whiteDog);
+          </pre>
+          <p>但是如果我们有一个对象whiteDog = {food:"bone"},我们不想对它重新定义say方法，那么我们可以通过call或apply用blackCat的say方法：blackCat.say.call(whiteDog);</p>
+          <p>所以，可以看出call和apply是为了动态改变this而出现的，当一个object没有某个方法，但是其他的有，我们可以借助call或apply用其它对象的方法来操作。</p>
+          <h3>3.应用</h3>
+          <p>
+            用的比较多的，通过document.getElementsByTagName选择的dom 节点是一种类似array的array。它不能应用Array下的push,pop等方法。我们可以通过：var domNodes =  Array.prototype.slice.call(document.getElementsByTagName("*"));这样domNodes就可以应用Array下的所有方法了。<br>
+           作者：杨志
+           链接：https://www.zhihu.com/question/20289071/answer/14644278
+           来源：知乎
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+  <a href="#top">
+  <div class="to-top">
+    <div class="arrow"></div>
+    <div class="stick"></div>
+  </div>
+    </a>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>
