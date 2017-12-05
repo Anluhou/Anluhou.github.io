@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="../IMG/wj_favicon.ico" type="image/x-icon" />
+  <link href="../CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/wj-blog.css">
+  <link rel="stylesheet" href="../CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="../CSS/mobile.css">
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar" name="top">
+    <div class="navbar-brand">
+      <a href="../index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+          <h2>词法作用域</h2>
+          <h4>1.什么是词法作用域</h4>
+          <p>一般来说，作用域有两种常见的模型，一种叫做词法作用域（Lexical Scope），一种叫做动态作用域（Dynamic Scope）。而javascript采取的便是词法作用域</p>
+          <p>简单来说，所谓的词法作用域就是一个变量的作用在定义的时候就已经被定义好，当在本作用域中找不到变量，就会一直向父作用域中查找，直到找到为止。</p>
+          <pre>
+            function fn() {
+              var a = 'hello';
+              var b = 'javascript';
+
+              function innerFn() {
+                var b = 'world';
+                console.log(`${a} ${b}`);
+              }
+              innerFn();
+            }
+            fn(); // hello world
+          </pre>
+          <p>因为在innerFn中已经定义了b所以，因此在查找b时便不会去使用父作用域中的b了。
+
+              Arrow Function中的this便遵循了这个含义</p>
+          <h4>2.什么是箭头函数</h4>
+          <p>为什么叫Arrow Function？因为它的定义用的就是一个箭头：</p>
+          <pre>x => x * x</pre>
+          <p>上面的箭头函数相当于：</p>
+          <pre>function (x) {
+                    return x * x;
+                }</pre>
+          <p>箭头函数相当于匿名函数，并且简化了函数定义。箭头函数有两种格式，一种像上面的，只包含一个表达式，连{ ... }和return都省略掉了。还有一种可以包含多条语句，这时候就不能省略{ ... }和return：</p>
+          <pre>
+            x => {
+                if (x > 0) {
+                    return x * x;
+                }
+                else {
+                    return - x * x;
+                }
+            }
+          </pre>
+          <p>如果参数不是一个，就需要用括号()括起来：</p>
+          <pre>
+            // 两个参数:
+            (x, y) => x * x + y * y
+
+            // 无参数:
+            () => 3.14
+
+            // 可变参数:
+            (x, y, ...rest) => {
+                var i, sum = x + y;
+                for (i=0; i< rest.length; i++) {
+                    sum += rest[i];
+                }
+                return sum;
+            }
+          </pre>
+          <p>如果要返回一个对象，就要注意，如果是单表达式，这么写的话会报错：</p>
+          <pre>// SyntaxError:
+                x => { foo: x }</pre>
+          <p>因为和函数体的{ ... }有语法冲突，所以要改为：</p>
+          <pre>
+            // ok:
+              x => ({ foo: x })
+          </pre>
+          <h4>3.Arrow Function中的this</h4>
+          <p>箭头函数看上去是匿名函数的一种简写，但实际上，箭头函数和匿名函数有个明显的区别：箭头函数内部的this是词法作用域，由上下文确定。
+
+            回顾前面的例子，由于JavaScript函数对this绑定的错误处理，下面的例子无法得到预期结果：</p>
+          <pre>
+            var obj = {
+                birth: 1990,
+                getAge: function () {
+                    var b = this.birth; // 1990
+                    var fn = function () {
+                        return new Date().getFullYear() - this.birth; // this指向window或undefined
+                    };
+                    return fn();
+                }
+            };
+          </pre>
+          <p>
+            现在，箭头函数完全修复了this的指向，this总是指向词法作用域，也就是外层调用者obj：
+          </p>
+          <pre>
+            var obj = {
+                birth: 1990,
+                getAge: function () {
+                    var b = this.birth; // 1990
+                    var fn = () => new Date().getFullYear() - this.birth; // this指向obj对象
+                    return fn();
+                }
+            };
+            obj.getAge(); // 25
+          </pre>
+          <p>如果使用箭头函数，以前的那种hack写法：</p>
+          <pre>var that = this;</pre>
+          <p>就不再需要了</p>
+          <p>由于this在箭头函数中已经按照词法作用域绑定了，所以，用call()或者apply()调用箭头函数时，无法对this进行绑定，即传入的第一个参数被忽略：</p>
+          <pre>
+            var obj = {
+                birth: 1995,
+                getAge: function (year) {
+                    var b = this.birth; // 1990
+                    var fn = (y) => y - this.birth; // this.birth仍是1995
+                    return fn.call({birth:2000}, year);//相当于call(null,year)
+                }
+            };
+            obj.getAge(2017); // 22
+          </pre>
+          <pre>
+            var obj = {
+                birth: 1995,
+                getAge: function (year) {
+                    var b = this.birth; // 1990
+                    var fn = function (y){return y-this.birth}; // this.birth为2000
+                    return fn.call({birth:2000}, year);//call改变了this的指向，指向{birth:2000}
+                }
+            };
+            obj.getAge(2017); // 17
+          </pre>
+          <h4>4.总结</h4>
+          <strong>
+            普通函数中的this的所指，根据具体怎么执行的而定。 <br>
+             用new指定的，this指向这个新定义的对象；<br>
+             用.指定的，this指向.之前的对象；<br>
+             没有.的，this指向windows对象。 <br><br>
+             箭头函数是个匿名的不配拥有this的穷函数，所以它里面的this到其父函数中的this去找；再穷的话找祖父... <br>
+          </strong>
+          部分转自<a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001438565969057627e5435793645b7acaee3b6869d1374000">廖雪峰的博客</a>
+        </div>
+      </div>
+    </div>
+  </article>
+  <a href="#top">
+    <div class="to-top">
+      <div class="arrow"></div>
+      <div class="stick"></div>
+    </div>
+  </a>
+
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>
