@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="../IMG\wj_favicon.ico" type="image/x-icon" />
+  <link href="../CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/wj-blog.css">
+  <link rel="stylesheet" href="../CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="../CSS/mobile.css">
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar" name="top">
+    <div class="navbar-brand">
+      <a href="../index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+          <h2>AJAX</h2>
+          <h4>1.定义</h4>
+          <p>AJAX不是JavaScript的规范，它只是一个哥们“发明”的缩写：Asynchronous JavaScript and XML，意思就是用JavaScript执行异步网络请求。</p>
+          <p>特点：网页的某部分进行更新</p>
+          <p>工作原理：view - 中间层（ajax引擎）-服务器</p>
+          <p>应用的基础： javascript, XMLHttpRequest对象（核心）, DOM对象</p>
+          <h4>2.方法</h4>
+          <p>常用的方法:open("method","url","async"); </p>
+          <p>method:通过什么方式访问 get,post. <br>
+            url:访问服务器的地址. <br>
+            async：是否异步 true false.默认是true <br>
+            send(content);//向服务器发送请求
+          </p>
+          <h4>3.属性</h4>
+          <p>向服务器请求状态的阶段：<br>
+              onreadystatechange //请求状态的改变的事情的触发器<br>
+              			readyState(请求状态)<br>
+              			0 未初始化<br>
+              			1 正在加载<br>
+              			2 已加载<br>
+              			3 交互中<br>
+              			4 完成<br>
+              	服务器反馈的阶段：<br>
+              		status = 200<br>
+              	反馈的内容：（数据）<br>
+              		responseText<br>
+          </p>
+          <h4>4.同源</h4>
+          <p>
+            浏览器同源策略：
+          	同源：指域名，端口，协议相同<br>
+            默认情况下，JavaScript在发送AJAX请求时，URL的域名必须和当前页面完全一致。
+            完全一致的意思是，域名要相同（www.example.com和example.com不同），协议要相同（http和https不同），端口号要相同（默认是:80端口，它和:8080就不同）。有的浏览器口子松一点，允许端口不同，大多数浏览器都会严格遵守这个限制。<br>
+            解决同源： <br>
+          	跨域操作(CORS):CORS全称Cross-Origin Resource Sharing，是HTML5规范定义的如何跨域访问资源。<br>
+            Origin表示本域，也就是浏览器当前页面的域。当JavaScript向外域（如sina.com）发起请求后，浏览器收到响应后，首先检查Access-Control-Allow-Origin是否包含本域，如果是，则此次跨域请求成功，如果不是，则请求失败，JavaScript将无法获取到响应的任何数据。<br>
+            假设本域是my.com，外域是sina.com，只要响应头Access-Control-Allow-Origin为http://my.com，或者是*，本次请求就可以成功。
+              <br>
+            可见，  跨域能否成功，取决于对方服务器是否愿意给你设置一个正确的Access-Control-Allow-Origin，决定权始终在对方手中。
+          </p>
+          <h4>5.XMLHttpRequest对象</h4>
+          <p>用JavaScript写一个完整的AJAX代码并不复杂，但是需要注意：AJAX请求是异步执行的，也就是说，要通过回调函数获得响应。
+
+              在现代浏览器上写AJAX主要依靠XMLHttpRequest对象：</p>
+          <pre>
+            var xhr = new XMLHttpRequest();//新建XMLHttpRequest对象
+            xhr.onreadystatechange = function(){ // 状态发生变化时，函数被回调
+              if(xhr.readyState == 4){// 成功完成
+                // 判断响应结果:
+                if(xhr.status ==200){
+                  // 成功，通过responseText拿到响应的文本:
+                  return success(xhr.responseText);
+                }else{
+                  // 失败，根据响应码判断失败原因:
+                  return fail(xhr.status);
+                }
+              }else{
+                //HTTP请求还在继续...
+              }
+            }
+            // 发送请求:
+            xhr.open('GET', '/api/categories');
+            xhr.send();
+          </pre>
+          <p>对于低版本的IE，需要换一个ActiveXObject对象：</p>
+          <p>var xhr = new ActiveXObject('Microsoft.XMLHTTP'); // 新建Microsoft.XMLHTTP对象</p>
+          <p>如果你想把标准写法和IE写法混在一起，可以这么写：</p>
+          <pre>
+            var xhr;
+            if(window.XMLHttpRequest){
+              xhr = new XMLHttpRequest;
+            }else{
+              xhr = new ActiveXobject('Microsoft XMLHTTP');
+            }
+          </pre>
+          <p>
+            通过检测window对象是否有XMLHttpRequest属性来确定浏览器是否支持标准的XMLHttpRequest。注意，不要根据浏览器的navigator.userAgent来检测浏览器是否支持某个JavaScript特性，一是因为这个字符串本身可以伪造，二是通过IE版本判断JavaScript特性将非常复杂。
+          </p>
+          <p>当创建了XMLHttpRequest对象后，要先设置onreadystatechange的回调函数。在回调函数中，通常我们只需通过readyState === 4判断请求是否完成，如果已完成，再根据status === 200判断是否是一个成功的响应。</p>
+          <p>XMLHttpRequest对象的open()方法有3个参数，第一个参数指定是GET还是POST，第二个参数指定URL地址，第三个参数指定是否使用异步，默认是true，所以不用写。</p>
+          <p>注意，千万不要把第三个参数指定为false，否则浏览器将停止响应，直到AJAX请求完成。如果这个请求耗时10秒，那么10秒内你会发现浏览器处于“假死”状态。</p>
+          <p>最后调用send()方法才真正发送请求。GET请求不需要参数，POST请求需要把body部分以字符串或者FormData对象传进去。</p>
+        </div>
+      </div>
+    </div>
+  <a href="#top">
+  <div class="to-top">
+    <div class="arrow"></div>
+    <div class="stick"></div>
+  </div>
+</a>
+  <a href="#top">
+    <div class="to-top">
+      <div class="arrow"></div>
+      <div class="stick"></div>
+    </div>
+  </a>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>
