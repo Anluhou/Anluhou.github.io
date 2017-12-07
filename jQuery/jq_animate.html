@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="../IMG\wj_favicon.ico" type="image/x-icon" />
+  <link href="../CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/wj-blog.css">
+  <link rel="stylesheet" href="../CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="../CSS/mobile.css">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar" name="top">
+    <div class="navbar-brand">
+      <a href="../index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+          <h2>jQuery动画</h2>
+          <h4>1.show/hide/toggle</h4>
+          <p>直接以无参数形式调用show()和hide()，会显示和隐藏DOM元素。但是，只要传递一个时间参数(slow,fast,XX毫秒)进去，就变成了动画。<br>
+            toggle()方法则根据当前状态决定是show()还是hide()。</p>
+          <pre>
+            var div = $('#test');
+            div.show(1000);//在1秒内逐渐显示
+
+            var div = $('#test');
+            div.hide('slow');//在0.6秒逐渐隐藏
+
+            var div = $('#test');
+            div.toggle('fast');//跟据当前状态决定是现实还是隐藏
+          </pre>
+          <div class="demo" style="width: 400px; height: 150px;">
+            <strong>demo:</strong>
+            <button id="hide">hide('slow')</button>
+            <button id="show">show(1000)</button>
+            <button id="toggle">toggle('fast')</button>
+            <div id="Toggle" style="margin: 10px; height: 100px; width: 100px; background-color: #666;"></div>
+          </div>
+          <h4>2.slideUp/slideDown/slideToggle</h4>
+          <p>你可能已经看出来了，show()和hide()是从左上角逐渐展开或收缩的，而slideUp()和slideDown()则是在垂直方向逐渐展开或收缩的。<br>
+            slideUp()把一个可见的DOM元素收起来，效果跟拉上窗帘似的，slideDown()相反，而slideToggle()则根据元素是否可见来决定下一步动作：</p>
+          <pre>
+            var div = $('#test-slide');
+            div.slideUp(3000); // 在3秒钟内逐渐向上消失
+          </pre>
+          <div class="demo" style="width: 400px; height: 150px;">
+            <strong>demo:</strong>
+            <button id="slideUp">slideUp</button>
+            <button id="slideDown">slideDown</button>
+            <button id="slideToggle">slideToggle</button>
+            <div id="sToggle" style=" margin: 10px; height: 100px; width: 100px; background-color: #666;"></div>
+          </div>
+          <h4>3.fadeIn/fadeOut</h4>
+          <p>fadeIn()和fadeOut()的动画效果是淡入淡出，也就是通过不断设置DOM元素的opacity属性来实现，而fadeToggle()则根据元素是否可见来决定下一步动作：</p>
+          <pre>
+            var div = $('#test-fade');
+            div.fadeOut('slow'); // 在0.6秒内淡出
+          </pre>
+          <div class="demo" style="width: 400px; height: 150px;">
+            <strong>demo:</strong>
+            <button id="fadeOut">fadeOut</button>
+            <button id="fadeIn">fadeIn</button>
+            <button id="fadeToggle">fadeToggle</button>
+            <div id="fToggle" style=" margin: 10px; height: 100px; width: 100px; background-color: #666;"></div>
+          </div>
+          <h4>4.animate</h4>
+          <p>如果上述动画效果还不能满足你的要求，那就祭出最后大招：animate()，它可以实现任意动画效果，我们需要传入的参数就是DOM元素最终的CSS状态和时间，jQuery在时间段内不断调整CSS直到达到我们设定的值：</p>
+          <p>$(selector).animate(styles,speed,easing,claaback); <br>
+            styles是必需的，规定产生动画效果的 CSS 样式和值。CSS 样式使用 DOM 名称（比如 "fontSize"）来设置，而非 CSS 名称（比如 "font-size"）。<br>
+            speed可选。规定动画的速度。默认是 "normal"。<br>
+            easing可选。规定在不同的动画点中设置动画速度的 easing 函数。内置的 easing 函数：swing,linear <br>
+            callback可选。animate 函数执行完之后，要执行的函数。
+          </p>
+          <pre>
+            var div = $('#test-animate');
+            div.animate({
+                opacity: 0.25,
+                width: '256px',
+                height: '256px'
+            }, 3000); // 在3秒钟内CSS过渡到设定值
+          </pre>
+          <p>animate()还可以再传入一个函数，当动画结束时，该函数将被调用：</p>
+          <pre>
+            var div = $('#test-animate');
+            div.animate({
+                opacity: 0.25,
+                width: '256px',
+                height: '256px'
+            }, 3000, function () {
+                console.log('动画已结束');
+                // 恢复至初始状态:
+                $(this).css('opacity', '1.0').css('width', '128px').css('height', '128px');
+            });
+          </pre>
+          <p>
+            实际上这个回调函数参数对于基本动画也是适用的。 <br>
+            有了animate()，你就可以实现各种自定义动画效果了：
+          </p>
+          <div class="demo" style="width: 400px; height: 150px;">
+            <strong>demo:</strong>
+            <button id="animate">animate</button>
+            <div id="Animate" style=" margin: 10px; height: 100px; width: 100px; background-color: #666;"></div>
+          </div>
+          <h4>5.delay</h4>
+          <p>jQuery的动画效果还可以串行执行，通过delay()方法还可以实现暂停，这样，我们可以实现更复杂的动画效果，而代码却相当简单：</p>
+          <pre>
+            $('#delay').click(function(){
+              // 动画效果：slideDown - 暂停 - 放大 - 暂停 - 缩小
+              $('#Delay').slideDown(2000);
+              $('#Delay').delay(1000);//暂停1S
+              $('#Delay').animate({//放大
+                opacity: 0.2,
+                width: '200px',
+                height: '200px'
+              },2000,function(){
+                $(this).delay(1000);//暂停1S
+                $(this).animate({//缩小
+                  opacity:1.0,
+                  width: '100px',
+                  height: '100px'
+                },2000);
+              });
+            });
+          </pre>
+          <div class="demo" style="width: 400px; height: 150px;">
+            <strong>demo:</strong>
+            <button id="delay">animate</button>
+            <div id="Delay" style="display: none; margin: 10px; height: 100px; width: 100px; background-color: #666;"></div>
+          </div>
+          <p>
+            你可能会遇到，有的动画如slideUp()根本没有效果。这是因为jQuery动画的原理是逐渐改变CSS的值，如height从100px逐渐变为0。但是很多不是block性质的DOM元素，对它们设置height根本就不起作用，所以动画也就没有效果。<br>
+            此外，jQuery也没有实现对background-color的动画效果，用animate()设置background-color也没有效果。这种情况下可以使用CSS3的transition实现动画效果。
+          </p>
+          <p>在执行删除操作时，给用户显示一个动画比直接调用remove()要更好。</p>
+          <pre>
+            function deleteFirstTR() {
+            var tr = $('#test-table>tbody>tr:visible').first();
+            tr.fadeOut(500,function(){
+              tr.remove();
+            });
+
+          </pre>
+        </div>
+      </div>
+    </div>
+  <a href="#top">
+  <div class="to-top">
+    <div class="arrow"></div>
+    <div class="stick"></div>
+  </div>
+</a>
+  <a href="#top">
+    <div class="to-top">
+      <div class="arrow"></div>
+      <div class="stick"></div>
+    </div>
+  </a>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+<script>
+//toggle js
+  $('#show').click(function(){
+    $('#Toggle').show(1000);
+  });
+  $('#hide').click(function(){
+    $('#Toggle').hide('slow');
+  });
+  $('#toggle').click(function(){
+    $('#Toggle').toggle('fast');
+  });
+//slideToggle js
+  $('#slideUp').click(function(){
+    $('#sToggle').slideUp(1000);
+  });
+  $('#slideDown').click(function(){
+    $('#sToggle').slideDown(1000);
+  });
+  $('#slideToggle').click(function(){
+    $('#sToggle').slideToggle(1000);
+  });
+  //fadeToggle js
+  $('#fadeOut').click(function(){
+    $('#fToggle').fadeOut(1000);
+  });
+  $('#fadeIn').click(function(){
+    $('#fToggle').fadeIn(1000);
+  });
+  $('#fadeToggle').click(function(){
+    $('#fToggle').fadeToggle(1000);
+  });
+
+  //animate js
+  $('#animate').click(function(){
+    $('#Animate').animate({
+      opacity: 0.2, //不透明度0.2
+      width: '200px',
+      height: '200px'
+    },3000,function(){
+      $(this).animate({
+        opacity:1.0,
+        width: '100px',
+        height: '100px'
+      },1000);
+    });
+  });
+
+  $('#delay').click(function(){
+    // 动画效果：slideDown - 暂停 - 放大 - 暂停 - 缩小
+    $('#Delay').slideDown(2000).delay(1000).animate({
+      opacity: 0.2, //不透明度0.2
+      width: '200px',
+      height: '200px'
+    },2000,function(){
+      $(this).delay(1000).animate({
+        opacity:1.0,
+        width: '100px',
+        height: '100px'
+      },2000);
+    });
+  });
+
+</script>
+</body>
+</html>
