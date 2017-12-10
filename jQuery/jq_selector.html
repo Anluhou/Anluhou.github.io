@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="IMG\wj_favicon.ico" type="image/x-icon" />
+  <link href="CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/wj-blog.css">
+  <link rel="stylesheet" href="CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="CSS/mobile.css">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    p{
+      color: #000;
+      margin: 5px;
+    }
+
+    button{
+      color: #000;
+    }
+
+    .container{
+      margin: 0;
+      padding-left: 0;
+    }
+
+    .select *{
+    width:200px;
+    height:200px;
+    margin:5px;
+    background:#aaa;
+    border:#000 1px solid;
+    float:left;
+    font-size:17px;
+    font-family:Verdana;
+    }
+    .mini{
+    width:80px;
+    height:80px;
+    background-color:#aaa;
+    font-size:12px;
+    }
+
+    .hide{
+    display:none;
+    }
+  </style>
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar" name="top">
+    <div class="navbar-brand">
+      <a href="../index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>jQuery 选择器</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-md-10 ">
+          <div class="select">
+            <div class="one" id="one">
+                id为one，class为one的div
+                <div class="mini">class为mini</div>
+            </div>
+            <div class="one" id="two" title="test">
+                id为two,class为one,title为test的div.
+                <div class="mini" title="other">class为mini,title为ohter</div>
+                <div class="mini" title="test">class为mini,title为test</div>
+            </div>
+            <div class="one">
+                <div class="mini">class为mini</div>
+                <div class="mini">class为mini</div>
+                <div class="mini">class为mini</div>
+                <div class="mini"></div>
+            </div>
+            <div class="one">
+                <div class="mini">class为mini</div>
+                <div class="mini">class为mini</div>
+                <div class="mini">class为mini</div>
+                <div class="mini" title="test">class为mini,title为test</div>
+            </div>
+            <div style="display: none;" class="none">
+                style的display为“none”的div
+            </div>
+            <div class="hide">class为“hide”的div</div>
+            <div>
+                包含input的type为“hidden”的div<input type="hidden" size="8"/>
+            </div>
+            <span id="mover">正在执行动画的span元素</span>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12 sidebar-container">
+          <div class="intro-select">
+            <button id="re" class="col-lg-12" style="margin-top:20px;">重置</button>
+            <div class="basic-select col-lg-6">
+
+              <h3>基本选择器</h3>
+              <button id="id">改变id为one的元素背景色</button>
+              <p>
+                $('#one').css('background','#bfa');
+              </p>
+              <button id="css">改变class为mini的所有元素背景色</button>
+              <p>
+                $('.mini').css('background','#bfa');
+              </p>
+              <button id="div">改变元素名是&lt;div&gt;的所有元素的背景色</button>
+              <p>
+                $('div').css('background','#bfa');
+              </p>
+              <button id="all">改变所有元素的背景色</button>
+              <p>
+                $('*').css('background','#bfa');
+              </p>
+              <button id="spantwo">改变所有&lt;span&gt;元素和id为two的元素背景色</button>
+              <p>
+                $('span,#two').css('background','#bfa');
+              </p>
+
+            </div>
+            <div class="hierarchy-selector col-lg-6" >
+              <h3>层次选择器</h3>
+              <button id="bd">改变body内所有div的背景色</button>
+              <p>
+                $('body div').css('background','#bfa');
+              </p>
+              <button id="bsd">改变body内子div元素的背景色</button>
+              <p>
+                $('body>div').css('background','#bfa');
+              </p>
+              <button id="ond">改变class为one的下一次div同辈元素背景色</button>
+              <p>
+                $('.one+div').css('background','#bfa');<br>
+              </p>
+              <button id="tad">改变id为two的元素后面的所有div同辈元素的背景色</button>
+              <p>
+                $('.two~div').css('background','#bfa');<br>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="word">
+        <h2>小结</h2>
+        <strong>$('.one+div')等价于$('.one')+next('div')</strong> <br>
+        <strong>$('.two~div')等价于$('.two').nextAll('div ')</strong> <br>
+        <strong>$('#prev').siblings('div')选取#prev所有的同辈div元素，无论前后位置</strong> <br>
+        <h2>基本过滤选择器</h2>
+        <strong>$('div:not(.one)').css('background','#bfa');改变class不为one的div元素的背景色</strong> <br>
+        <strong>$('div:even')选择索引值为偶数的div元素</strong><br>
+        <strong>$('div:odd')选择索引值为奇数的div元素</strong><br>
+        <strong>$('div:eq(3)')选择索引值等于3的div元素 ！！！得到的是单个元素</strong><br>
+        <strong>$('div:gt(3)')选择索引值大于3的div元素</strong><br>
+        <strong>$('div:lt(3)')选择索引值小于3的div元素</strong><br>
+        <strong>$(':header')选择所有标题元素，例如h1,h2,h3...</strong><br>
+        <strong>$(':animate')选择当前正坐在执行动画的元素</strong><br>
+        <strong>$(':focus')选择当前获取焦点的元素</strong>
+        <h2>内容过滤选择器</h2>
+        <strong>:contains(text)选取含有文本内容为'text'的元素</strong><br>
+        <strong>:empty 选取不包含子元素或者文本的空元素</strong><br>
+        <strong>:has(selector)选取含有选择器所匹配的元素的元素; $('div:has(p)')选取含有p元素的div元素</strong><br>
+        <strong>:parent 选取含有子元素或者文本的元素</strong>
+        <h2>可见性过滤选择器</h2>
+        <strong>:hidden 选取所有不可见元素 $('div:hidden').show(3000);</strong>
+        <strong>:visible 选取所有可见元素</strong>
+        <h2>属性过滤选择器</h2>
+        <strong>[attribute]选取拥有此属性的元素</strong> <br>
+        <strong>[attribute=value]选取属性的值为value的元素</strong><br>
+        <strong>[[attribute!=value]选取属性的值不等于value的元素</strong><br>
+        <strong>[attribute^=value]选取属性的值以value开始的元素</strong><br>
+        <strong>[attribute$=value]选取属性的值以value结束的元素</strong><br>
+        <strong>[attribute*=value]选取属性的值含有value的元素</strong><br>
+        <strong>[attribute|=value]选取属性等于给定字符串或以该字符串为前缀('-')的元素; $("div[title|='en']")选取属性title等于en或以en为前缀(en-)</strong><br>
+        <strong>[attribute~=value]选取属性用空格分割的值中包含一个给定元素的值; $("div[title~='uk']")选取属性title用空格分隔的值中包含字符uk的元素</strong><br>
+        <strong>[attribute1][attribute2][attributeN]用属性选择器合并成一个复合属性选择器，满足多个条件。每选择一次，缩小一次范围 <br>
+                $("div[class][title$='test']")选择拥有属性class,并且属性title以"test"结束的div元素。
+        </strong>
+      </div>
+    </div>
+  </article>
+  <a href="#top">
+    <div class="to-top">
+      <div class="arrow"></div>
+      <div class="stick"></div>
+    </div>
+  </a>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+  <script>
+
+    $(function(){
+      $('#re').click(function(){
+        $('.select *').css('background','#aaa');
+      })
+
+      $('#id').click(function(){
+          $('#one').css('background','#bfa');
+      })
+
+      $('#css').click(function(){
+        $('.mini').css('background','#bfa');
+      })
+
+      $('#div').click(function(){
+        $('.select div').css('background','#bfa');
+      })
+
+      $('#all').click(function(){
+        $('.select *').css('background','#bfa');
+      })
+
+      $('#spantwo').click(function(){
+        $('span,#two').css('background','#bfa');
+      })
+
+      $('#bd').click(function(){
+        $('.select div').css('background','#bfa');
+      })
+
+      $('#bsd').click(function(){
+        $('.select>div').css('background','#bfa');
+      })
+
+      $('#ond').click(function(){
+        $('.one+div').css('background','#bfa');
+      })
+
+      $('#tad').click(function(){
+        $('#two~div').css('background','#bfa');
+      })
+
+      $('#notone').click(function(){
+        $('.select div:not(.one)').css('background','#bfa');
+      })
+
+      $('#hid').click(function(){
+        $('div:hidden').show(3000);
+      })
+    })
+
+  </script>
+</body>
+</html>
