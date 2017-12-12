@@ -104,7 +104,7 @@
         </div>
         <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12 sidebar-container">
           <div class="intro-select">
-            <button id="re" class="col-lg-12" style="margin-top:20px;">重置</button>
+            <!-- <button id="re" class="col-lg-12" style="margin-top:20px;">重置</button> -->
             <div class="basic-select col-lg-6">
 
               <h3>基本选择器</h3>
@@ -206,9 +206,14 @@
   <script>
 
     $(function(){
-      $('#re').click(function(){
-        $('.select *').css('background','#aaa');
-      })
+
+      // $('#re').click(function(){
+      //   $('.select *').css('background','#aaa');
+      // })
+
+      $("* button").click(function(){
+			  $('.select *').css('background','#aaa');
+		  })
 
       $('#id').click(function(){
           $('#one').css('background','#bfa');
@@ -253,6 +258,7 @@
       $('#hid').click(function(){
         $('div:hidden').show(3000);
       })
+
     })
 
   </script>
