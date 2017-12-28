@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="../IMG\wj_favicon.ico" type="image/x-icon" />
+  <link href="../CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/wj-blog.css">
+  <link rel="stylesheet" href="../CSS/trans.css">
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="../CSS/mobile.css">
+  <script src="../js/jquery.js" type="text/javascript"></script>
+  <script src="../js/blog.js"></script>
+  <style>
+  *{
+    font-size: 16px;
+  }
+  span{
+    color: #bd4147;
+  }
+  </style>
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <!-- <nav class="navbar" name="top">
+    <div class="navbar-brand">
+      <a href="../index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header> -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+          <h2>Bootstrap笔记</h2>
+          <h3>一、containers</h3>
+          <br>
+          <h4>Responsive breakpoints(响应的断点)</h4>
+          <p>由于Bootstrap首先是移动开发的,使用一些媒体查询为我们的布局和界面创建合理的断点。这些断点主要基于最小的视口宽度，并允许我们随着视口更改而放大元素。</p>
+          @media (min-width: 768px) { ... }
+          <h4>1.container</h4>
+          <p>container是Bootstrap中最基本的布局元素，在使用我们的默认网格系统时是必需的。<br>
+            选择一个响应式的固定宽度的容器（意味着它max-width在每个断点处的变化）或流体宽度（意味着它始终是100%宽的）。
+          </p>
+          <h4>2.container-fluid</h4>
+          <p>.container-fluid全宽的container，跨越viewport的整个宽度。</p>
+          <p><strong>
+            container 类和container-fluid类的区别体现在是否有随视口宽度改变的margin存在。<br>
+            container类所谓的自适应也是通过margin的改变来完成，container-fluid类的百分百宽度是指在固有的15px的padding前提下宽度总是当前视口的宽度。
+          </strong>
+          </p>
+          <h3>二、Navbar</h3>
+          <h3>Bootstrap功能强大的响应式导航标题的文档和示例，navbar。包括对品牌，导航等的支持.</h3>
+          <ul>
+            <li><span>navbar-brand</span> 为您的公司，产品或项目名称。</li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </article>
+  <a href="#top">
+    <div class="to-top">
+      <div class="arrow"></div>
+      <div class="stick"></div>
+    </div>
+  </a>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>

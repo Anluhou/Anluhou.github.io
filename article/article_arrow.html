@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="../CSS/wj-blog.css">
   <link rel="stylesheet" href="../CSS/trans.css">
   <link rel="stylesheet"  media="screen and (max-width: 768px)" href="../CSS/mobile.css">
+  <script src="../js/jquery.js" type="text/javascript"></script>
+  <script src="../js/blog.js"></script>
   <title>吴杰的博客</title>
 </head>
 <body>
@@ -33,7 +35,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
-          <h2>词法作用域</h2>
+          <h2>词法作用域与箭头函数</h2>
           <h4>1.什么是词法作用域</h4>
           <p>一般来说，作用域有两种常见的模型，一种叫做词法作用域（Lexical Scope），一种叫做动态作用域（Dynamic Scope）。而javascript采取的便是词法作用域</p>
           <p>简单来说，所谓的词法作用域就是一个变量的作用在定义的时候就已经被定义好，当在本作用域中找不到变量，就会一直向父作用域中查找，直到找到为止。</p>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="IMG\wj_favicon.ico" type="image/x-icon" />
+  <link href="../CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/wj-blog.css">
+  <link rel="stylesheet" href="../CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="../CSS/mobile.css">
+  <script src="../js/jquery.js" type="text/javascript"></script>
+  <script src="../js/blog.js"></script>
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar" name="top">
+    <div class="navbar-brand">
+      <a href="../index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+          <h2>
+            Javascript的this用法
+          </h2>
+          <p>
+            this是Javascript语言的一个关键字。
+            它代表函数运行时，自动生成的一个内部对象，只能在函数内部使用。比如，
+          </p>
+          <pre>
+            function test(){
+　　　　      this.x = 1;
+　　         }
+          </pre>
+          <p>随着函数使用场合的不同，this的值会发生变化。但是有一个总的原则，<strong>那就是this指的是，调用函数的那个对象。</strong>
+            下面分四种情况，详细讨论this的用法
+          </p>
+          <strong>情况一：纯粹的函数调用</strong>
+          <p>这是函数的最通常用法，属于全局性调用，因此this就代表全局对象Global。
+              请看下面这段代码，它的运行结果是1。
+          </p>
+          <pre>
+            function test(){
+      　　　　this.x = 1;
+      　　　　alert(this.x);//
+        　　}
+        　　test(); // 1
+          </pre>
+          <p>为了证明this就是全局对象，我对代码做一些改变：</p>
+          <pre>
+            var x = 1;//this指向全局变量x
+          　function test(){
+          　　　alert(this.x);
+          　}
+          　test(); // 1
+          </pre>
+          <p>运行结果还是1。再变一下：</p>
+          <pre>
+            var x = 1;
+        　　function test(){
+        　　　　this.x = 0;//把外部的x的值重新赋值为0
+        　　}
+        　　test();
+        　　alert(x); //0
+          </pre>
+          <p>说明this.x是全局对象，alert能够调用函数内部的this.x的值</p>
+          <strong>情况二：作为对象方法的调用</strong>
+          <p>函数还可以作为某个对象的方法调用，这时this就指这个上级对象。</p>
+          <pre>　
+            function test(){
+  　　　　    alert(this.x);//由于o.m();调用了test函数，因此this.x指向了o.x;
+          　}
+        　　var o = {};
+        　　o.x = 1;
+        　　o.m = test;
+        　　o.m(); // 1
+          </pre>
+          <strong>
+            情况三 作为构造函数调用
+          </strong>
+          <p>所谓构造函数，就是通过这个函数生成一个新对象（object）。这时，this就指这个新对象。</p>
+          <pre>
+            var x = 2;
+        　　function test(){
+        　　　　this.x = 1;
+        　　}
+        　　var o = new test();
+        　　alert(x); //2
+          </pre>
+          <p>运行结果为2，表明全局变量x的值根本没变。</p>
+          <strong>情况四 apply调用</strong>
+          <p>
+            apply()是函数对象的一个方法，它的作用是改变函数的调用对象，它的第一个参数就表示改变后的调用这个函数的对象。因此，this指的就是这第一个参数。
+          </p>
+          <pre>
+            var x = 0;
+        　　function test(){
+        　　　　alert(this.x);
+        　　}
+        　　var o={};
+        　　o.x = 1;
+        　　o.m = test;
+        　　o.m.apply(); //0
+          </pre>
+          <p>
+            <strong>apply()的参数为空时，默认调用全局对象。</strong>因此，这时的运行结果为0，证明this指的是全局对象。
+            如果把最后一行代码修改为
+          </p>
+          <pre>　o.m.apply(o); //1</pre>
+          <p>运行结果就变成了1，证明了这时this代表的是对象o。</p>
+          <pre>
+            var xiaoming = {
+                name: '小明',
+                birth: 1990,
+                age: function () {
+                    var y = new Date().getFullYear();
+                    return y - this.birth;
+                }
+            };//用var申明函数表达式，别忘了";".
+          </pre>
+          <p>绑定到对象上的函数称为方法，和普通函数也没啥区别，但是它在内部使用了一个this关键字，这个东东是什么？
+
+            在一个方法内部，this是一个特殊变量，它始终指向当前对象，也就是xiaoming这个变量。所以，this.birth可以拿到xiaoming的birth属性。
+
+            让我们拆开写：</p>
+            <pre>
+              function getAge() {
+                  var y = new Date().getFullYear();
+                  return y - this.birth;
+              }
+
+              var xiaoming = {
+                  name: '小明',
+                  birth: 1990,
+                  age: getAge
+              };
+              xiaoming.age();//25,正常结果,this指向被调用的的对象'xiaoming'.
+              getAge();//NaN,this指向全局对象window.
+            </pre>
+            <p>单独调用函数getAge()怎么返回了NaN？请注意，我们已经进入到了JavaScript的一个大坑里。
+
+              JavaScript的函数内部如果调用了this，那么这个this到底指向谁？
+
+              答案是，视情况而定！
+
+              如果以对象的方法形式调用，比如xiaoming.age()，该函数的this指向被调用的对象，也就是xiaoming，这是符合我们预期的。
+
+              如果单独调用函数，比如getAge()，此时，该函数的this指向全局对象，也就是window。
+
+              坑爹啊！
+
+              更坑爹的是，如果这么写：</p>
+            <pre>
+              var fn = xiaoming.age; // 先拿到xiaoming的age函数
+              fn(); // NaN
+            </pre>
+            <p>也是不行的！要保证this指向正确，必须用obj.xxx()的形式调用！
+
+              由于这是一个巨大的设计错误，要想纠正可没那么简单。ECMA决定，在strict模式下让函数的this指向undefined，因此，在strict模式下，你会得到一个错误：</p>
+            <pre>
+              'use strict';
+
+              var xiaoming = {
+                  name: '小明',
+                  birth: 1990,
+                  age: function () {
+                      var y = new Date().getFullYear();
+                      return y - this.birth;
+                  }
+              };
+
+              var fn = xiaoming.age;
+              fn(); // Uncaught TypeError: Cannot read property 'birth' of undefined
+            </pre>
+            <p>这个决定只是让错误及时暴露出来，并没有解决this应该指向的正确位置。
+
+                有些时候，喜欢重构的你把方法重构了一下：</p>
+            <pre>
+              'use strict';
+
+              var xiaoming = {
+                  name: '小明',
+                  birth: 1990,
+                  age: function () {
+                      function getAgeFromBirth() {
+                          var y = new Date().getFullYear();
+                          return y - this.birth;
+                      }
+                      return getAgeFromBirth();
+                  }
+              };
+
+              xiaoming.age(); // Uncaught TypeError: Cannot read property 'birth' of undefined
+            </pre>
+            <strong>
+              结果又报错了！原因是this指针只在age方法的函数内指向xiaoming，在函数内部定义的函数，this又指向undefined了！（在非strict模式下，它重新指向全局对象window！）
+            </strong>
+            <p>修复的办法也不是没有，我们用一个that变量首先捕获this：</p>
+            <pre>'use strict';
+
+                  var xiaoming = {
+                      name: '小明',
+                      birth: 1990,
+                      age: function () {
+                          var that = this; // 在方法内部一开始就捕获this
+                          function getAgeFromBirth() {
+                              var y = new Date().getFullYear();
+                              return y - that.birth; // 用that而不是this
+                          }
+                          return getAgeFromBirth();
+                      }
+                  };
+
+                  xiaoming.age(); // 25</pre>
+          <p>用var that = this;，你就可以放心地在方法内部定义其他函数，而不是把所有语句都堆到一个方法中。</p>
+          <br>
+          <p>虽然在一个独立的函数调用中，根据是否是strict模式，this指向undefined或window，不过，我们还是可以控制this的指向的！
+
+            要指定函数的this指向哪个对象，可以用函数本身的apply方法，它接收两个参数，第一个参数就是需要绑定的this变量，第二个参数是Array，表示函数本身的参数。
+
+            用apply修复getAge()调用：</p>
+          <pre>
+            function getAge() {
+                var y = new Date().getFullYear();
+                return y - this.birth;
+            }
+
+            var xiaoming = {
+                name: '小明',
+                birth: 1990,
+                age: getAge
+            };
+
+            xiaoming.age(); // 25
+            getAge.apply(xiaoming, []); // 25, this指向xiaoming, 参数为空
+          </pre>
+          <p>
+            另一个与apply()类似的方法是call()，唯一区别是：
+
+            apply()把参数打包成Array再传入；
+
+            call()把参数按顺序传入。
+          </p>
+          <p>
+            比如调用Math.max(3, 5, 4)，分别用apply()和call()实现如下：
+          </p>
+          <pre>
+            Math.max.apply(null, [3, 5, 4]); // 5
+            Math.max.call(null, 3, 5, 4); // 5
+          </pre>
+          <strong>对普通函数调用，我们通常把this绑定为null。</strong> <br><br>
+          <a href="http://www.ruanyifeng.com/blog/2010/04/using_this_keyword_in_javascript.html">转自阮一峰的博客</a>以及<a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014345005399057070809cfaa347dfb7207900cfd116fb000">廖雪峰的官网</a>
+          <br><a href="http://www.cnblogs.com/isaboy/archive/2015/10/29/javascript_this.html">图解this</a>
+        </div>
+      </div>
+    </div>
+  <a href="#top">
+  <div class="to-top">
+    <div class="arrow"></div>
+    <div class="stick"></div>
+  </div>
+</a>
+  <footer>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>
