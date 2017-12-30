@@ -93,6 +93,62 @@
             }
             $mylist.html(arr_li);
           </pre>
+          <h4>5.数组方式使用jQuery对象</h4>
+          <p>
+            使用jQuery选择器获取结果是一个jQuery对象。然而，jQuery类库会让你感觉你正在使用一个定义了索引和长度的数组。<br>
+            在性能方面，建议使用简单for或者while来循环来处理，而不是$.each(),这样能使你的代码更快。
+          </p>
+          <pre>
+            $.each(array,function(){
+              array[i]=i
+            });
+          </pre>
+          <p>使用for代替each()方法，代码如下：</p>
+          <pre>
+            var array = new Array();
+            for(var i=0; i&lt;array.length;i++){
+              array[i]=i
+            }
+          </pre>
+          另外注意，检查长度也是一个检查jQuery对象是否存在的方式，下面一段代码通过length属性检查页面中是否含有id为"content"元素： <br>
+          <pre>
+            var $content = $('#content');
+            if($content){//总是true
+              //Do sth ...
+            }
+            <br>
+            var $content = $('#content');
+            if($content.length){//这是正确做法，拥有元素才返回true
+              //Do sth ...
+            }
+          </pre>
+          <h4>6.事件代理</h4>
+          <p>
+            每一个javaScript事件(例如：click,mouseover等)都会冒泡到父级节点。当我们需要给多个元素调用同个函数时这点会很有用。<br>
+            比如，我们要给一个表格绑定这样的行为：点击td后，把背景设置为红色，代码如下：
+          </p>
+          <pre>
+            $('#mylist td').click(function(){
+              $(this).css('background','red');
+            });
+          </pre>
+          <p>
+            假设有100个td元素，在使用以上方式的时候，你绑定了100个事件，这将带来很负面的性能影响。<br>
+            代替这种效率很差的多元素事件监听方法就是，你只需要向它们的父级节点绑定一次事件，然后通过event.target获取到点击的当前元素，代码如下：
+          </p>
+          <pre>
+            $('#myTable').click(function(e){
+              var $clicked = $(e.target);//e.target捕捉到触发的目标元素
+              $clicked.css('background','red');
+            });
+          </pre>
+          <p>
+            在改进方式中，你只为元素绑定了一个事件，显然这种方式更优于之前那种。<br>
+            同时，在jQuery1.7中提供一个新的方式on(),来帮助你将整个事件封装到一个便利方法中，如下所示： <br>
+            $('#myTable').on('click','td',function(){
+              $(this).css('background','red');
+            });
+          </p>
         </div>
       </div>
     </div>
