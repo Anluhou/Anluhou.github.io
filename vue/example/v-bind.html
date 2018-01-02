@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>v-bind 实例</title>
+    <style>
+        .classA{
+             color:red;
+        }
+        .classB{
+            font-size: 150%;
+        }
+    </style>
+</head>
+<body>
+    <h1>v-bind 实例</h1>
+    <hr>
+    <div id="app">
+        <p><img v-bind:src="imgSrc" width="300px"></p>
+        <p><a :href="webUrl" target="_blank">吴杰的博客</a></p>
+        <hr>
+        <div :class="className">1.绑定Class</div>
+        <div :class="{classA:isOk}">2.绑定Class中的判断</div>
+        <input type="checkbox" id="isOk" v-model="isOk">
+        <label for="isOk">isOk={{isOk}}</label>
+    </div>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                imgSrc:'https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike180%2C5%2C5%2C180%2C60/sign=14362a1d6f380cd7f213aabfc02dc651/77c6a7efce1b9d1659b24fccf9deb48f8c546422.jpg',
+                webUrl:'http://anluhou.top',
+                className:'classB',
+                isOk:true
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>v-on</title>
+</head>
+<body>
+    <h1>v-on 实例</h1>
+    <hr>
+    <div id="app">
+        本场比赛的分数：<span v-text="goal"></span>
+        <p>
+            <button v-on:click="addPoint">加分</button>
+            <button @click="minusPoint">减分</button> <br>
+            <input type="text" v-on:keyup.enter="onEnter" v-on:keyup.40="on40" v-model="goal2">
+        </p>
+    </div>
+    <div id="app2">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage">逆转消息</button>
+    </div>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                goal:1,
+                goal2:1
+            },
+            methods:{
+                addPoint:function(){
+                    this.goal++;
+                },
+                minusPoint:function(){
+                    this.goal--;
+                },
+                onEnter:function(){
+                    this.goal+=parseInt(this.goal2);
+                },
+                on40:function(){
+                    this.goal-=parseInt(this.goal2);
+                }
+            }
+        })
+        
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                message: 'Hello vue.js!'
+            },
+            methods:{
+                reverseMessage: function(){
+                    this.message = this.message.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+</body>
+</html>
