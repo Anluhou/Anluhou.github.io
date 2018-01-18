@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="关于前端探索、分享、记录、生活 |这里是 Wj 的个人博客，与你一起踏上前端之路。">
+  <meta name="keywords" content="吴杰, Wj吴杰, 安陆侯, 前端之路, 吴杰的博客, WjBlog, 博客, 个人网站, 互联网, Web, JavaScript, 前端">
+  <link rel="shortcut icon" href="../IMG\wj_favicon.ico" type="image/x-icon" />
+  <link href="../CSS/bootstrap-min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/wj-blog.css">
+  <link rel="stylesheet" href="../CSS/trans.css">
+  <link rel="stylesheet"  media="screen and (max-width: 768px)" href="../CSS/mobile.css">
+  <script src="../js/jquery.js" type="text/javascript"></script>
+  <script src="../js/blog.js"></script>
+  <title>吴杰的博客</title>
+</head>
+<body>
+  <nav class="navbar" name="top">
+    <div class="navbar-brand">
+      <a href="../index.html">Wj Blog</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>Wj Blog</h1>
+      <div class="statue">前端之路</div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2col-md-10 col-md-offset-1">
+            <h2>函数的四种调用模式</h2>
+            <h3>1.方法调用模式</h3>
+            <p>当一个函数被保存为对象的一个属性时，我们称它为一个方法。当一个方法被调用时，this被绑定到该对象
+                。如果调用表达式包含一个提取属性的动作时（即包含一个. 点表达式或[subscript]下标表达式），那么
+                它就是被当做一个方法来调用。
+            </p>
+            <pre>
+            //方法调用模式
+            var myObject = {
+                value:0,
+                increment: function(inc){
+                    this.value += typeof inc === 'number' ? inc : 1;//如果参数不是数字，那么默认使用数字1.
+                }
+            };
+            myObject.increment();//调用方法 传入参数为空默认使用1.
+            console.log(myObject.value);//1
+        
+            myObject.increment(2);
+            console.log(myObject.value);//3
+            </pre>
+            <p>
+                方法可以使用this访问自己所属对象，所以它能从对象中取值或对对象进行修改。this到对象的绑定发生在调用的时候。
+            </p>
+            <h3>2.函数调用模式</h3>
+            <p>
+                当一个函数并非一个对象的属性时，那么它就是被当作一个函数来调用的。
+            </p>
+            <pre>
+                var sum = add(3,4);//7
+            </pre>
+            <p>
+                以此模式调用函数时，this被绑定到全局对象。这是语言设计上的一个错误。解决方法：
+            </p>
+            <pre>
+            //给myObject增加一个double方法
+            myObject.double = function(){
+                var that = this;//解决方法
+                
+                var helper = function(){
+                    that.value = add(that.value,that.value);
+                };
+                helper();//以函数的形式调用helper
+            };
+
+            //以方法的形式调用double
+            myObject.double();
+            console.log(myObject.value);//6
+            </pre>
+            <h3>3.构造器调用模式</h3>
+            <p>JavaScript是一门基于原型继承的语言。这意味着对象可以直接从其他对象继承属性。该语言是无类型的。
+                如果在一个函数前面带上new来调用，那么背地里将会创建一个连接到该函数的prototype成员的新对象，同时this会被绑定到那个新对象上。
+                new前缀也会改变return语句的行为。
+            </p>
+            <pre>
+                //创建一个名为Quo的构造器函数。它构造一个带有status属性的对象。
+                //一个函数，如果创建目的就是希望结合new前缀来调用，那它就被称为构造器函数。按照约定，它们保存在以大写格式命名的变量里（本例的Quo）。
+                //调用构造器函数时一定要在前面加上new,否则会出现错误。
+                var Quo = function(string){
+                    this.status = string;
+                };
+
+                //给Quo的所有实例提供一个名为get_status的公共方法。
+                Quo.prototype.get_status = function(){
+                    return this.status;
+                }
+
+                //构造一个Quo实例
+                var myQuo = new Quo("success")
+                console.log(myQuo.get_status());
+            </pre>
+            <h3>4.Apply调用模式</h3>
+            <p>
+                因为JavaScript是一门函数式的面向对象编程的语言，所以函数可以拥有方法。<br>
+                apply方法让我们构建一个参数数组传递给调用函数。它也允许我们选择this的值。<br>
+                apply方法接收两个参数，第1个是要绑定给this的值，第2个就是一个参数数组。
+            </p>
+            <pre>
+                //构造一个包含两个数字的数组，并将它们相加。
+                var array = [3,4];
+                var sum = add.apply(null,array);
+
+                //构造一个包含status成员的对象。
+                var statusObject = {
+                    status: 'A-OK'
+                };
+                //statusObject并没有继承自Quo.prototype，但我们可以在statusObject上调用get_status方法。
+                var status = Quo.prototype.get_status.apply(statusObject);//A-Ok
+            </pre>
+        </div>
+      </div>
+    </div>
+  </article>
+  <footer>
+    <div id="goHeader">
+      <a class="to-top">
+        <div class="arrow"></div>
+        <div class="stick"></div>
+      </a>
+    </div>
+    <p class="copyright">
+      Copyright © Wj Blog 2017
+      <br>
+      Theme by Wj
+    </p>
+  </footer>
+</body>
+</html>
